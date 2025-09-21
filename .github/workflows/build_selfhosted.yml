@@ -2,9 +2,6 @@ name: Build TerracottaROM (all devices)
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - 'paradigm'
 
 jobs:
   gts7fewifi:
