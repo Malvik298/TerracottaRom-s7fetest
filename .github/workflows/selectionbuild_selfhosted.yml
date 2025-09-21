@@ -58,8 +58,3 @@ jobs:
           source ./buildenv.sh "$DEVICE"
           run_cmd make_rom
 
-      - name: Upload ROM
-        run: |
-          DEVICE="${{ github.event.inputs.device }}"
-          mega-put -c out/*.zip "TerracottaROM/${DEVICE}/$(date +%m.%d.%Y)/"
-          rm -rf out/target out/*.zip
