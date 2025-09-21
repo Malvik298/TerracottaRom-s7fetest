@@ -34,7 +34,6 @@ jobs:
              libbrotli-dev libgtest-dev libprotobuf-dev libunwind-dev libpcre2-dev \
              libzstd-dev lld jq protobuf-compiler pcre2-utils webp cmake \
              curl xxd patchelf flex bison libarchive-tools build-essential python3-venv device-tree-compiler openjdk-21-jdk
-             sudo modprobe erofs f2fs
              git config --global user.name "github-actions[bot]"
              git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
              echo -n "${{ secrets.PLATFORM_KEY_PK8 }}" | base64 --decode > security/platform.pk8
