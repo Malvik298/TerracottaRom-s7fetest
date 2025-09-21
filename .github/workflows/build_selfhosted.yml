@@ -7,7 +7,7 @@ on:
       - 'paradigm'
 
 jobs:
-  gts7xlwifi:
+  gts7fewifi:
     runs-on: self-hosted
     steps:
       - name: Checkout repo
@@ -17,17 +17,17 @@ jobs:
 
       - name: Prepare Symlinks
         run: |
-              mkdir -p /home/nerv/out/tools /home/nerv/out/fw /home/nerv/out/odin
+              mkdir -p /home/runner/actions-runner/out/tools /home/runner/actions-runner/out/fw /home/runner/actions-runner/out/odin
               mkdir out
-              rm -rf out/odin out/fw out/tools
-              ln -s /home/nerv/out/odin out/odin || true
-              ln -s /home/nerv/out/fw out/fw || true
+              rm -rf /home/runner/actions-runner/out/odin out/fw out/tools
+              ln -s /home/runner/actions-runner/out/odin out/odin || true
+              ln -s /home/runner/actions-runner/out/fw out/fw || true
 
       - name: Prepare tools (1x rebuild)
         run: |
-             rm -rf /home/nerv/out/tools
-             mkdir /home/nerv/out/tools
-             ln -s /home/nerv/out/tools out/tools
+             rm -rf /home/runner/actions-runner/out/tools
+             mkdir /home/runner/actions-runner/out/tools
+             ln -s /home/runner/actions-runner/out/tools out/tools
 
       - name: Set up build environment
         run: |
@@ -45,94 +45,6 @@ jobs:
 
       - name: Build ROM
         run: |
-             source ./buildenv.sh gts7xlwifi
+             source ./buildenv.sh gts7fewifi
              run_cmd make_rom
 
-      - name: Upload ROM
-        run: |
-             mega-put -c out/*.zip "TerracottaROM/gts7xlwifi/$(date +%m.%d.%Y)/"
-             rm -rf out/target out/*.zip
-
-  gts7lwifi:
-    runs-on: self-hosted
-    needs: gts7xlwifi
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: Prepare Symlinks
-        run: |
-             mkdir -p /home/nerv/out/tools /home/nerv/out/fw /home/nerv/out/odin
-             mkdir out
-             rm -rf out/odin out/fw out/tools
-             ln -s /home/nerv/out/odin out/odin || true
-             ln -s /home/nerv/out/fw out/fw || true
-             ln -s /home/nerv/out/tools out/tools
-
-      - name: Build ROM
-        run: |
-             source ./buildenv.sh gts7lwifi
-             run_cmd make_rom
-
-      - name: Upload ROM
-        run: |
-             mega-put -c out/*.zip "TerracottaROM/gts7lwifi/$(date +%m.%d.%Y)/"
-             rm -rf out/target out/*.zip
-
-  gts7xl:
-    runs-on: self-hosted
-    needs: gts7lwifi
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: Prepare Symlinks
-        run: |
-             mkdir -p /home/nerv/out/tools /home/nerv/out/fw /home/nerv/out/odin
-             mkdir out
-             rm -rf out/odin out/fw out/tools
-             ln -s /home/nerv/out/odin out/odin
-             ln -s /home/nerv/out/fw out/fw
-             ln -s /home/nerv/out/tools out/tools
-
-      - name: Build ROM
-        run: |
-             source ./buildenv.sh gts7xl
-             run_cmd make_rom
-
-      - name: Upload ROM
-        run: |
-             mega-put -c out/*.zip "TerracottaROM/gts7xl/$(date +%m.%d.%Y)/"
-             rm -rf out/target out/*.zip
-
-  gts7l:
-    runs-on: self-hosted
-    needs: gts7xl
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: Prepare Symlinks
-        run: |
-             mkdir -p /home/nerv/out/tools /home/nerv/out/fw /home/nerv/out/odin
-             mkdir out
-             rm -rf out/odin out/fw out/tools
-             ln -s /home/nerv/out/odin out/odin || true
-             ln -s /home/nerv/out/fw out/fw || true
-             ln -s /home/nerv/out/tools out/tools
-
-      - name: Build ROM
-        run: |
-             source ./buildenv.sh gts7l
-             run_cmd make_rom
-
-      - name: Upload ROM
-        run: |
-             mega-put -c out/*.zip "TerracottaROM/gts7l/$(date +%m.%d.%Y)/"
-             rm -rf out/target out/*.zip
